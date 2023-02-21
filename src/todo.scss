@@ -10,7 +10,7 @@ ul {
 }
 
 .todo-form {
-  max-width: 500px;
+  max-width: 650px;
   margin: 0 auto;
   background-color: #ff7f58;
   display: flex;
@@ -21,7 +21,8 @@ ul {
 .todo-form__input {
   border: none;
   padding: 5px;
-  width: 300px;
+  width: 400px;
+  outline: none;
 }
 
 .todo-form__button {
@@ -34,9 +35,11 @@ ul {
   font-family: "Roboto", sans-serif;
   color: white;
   font-weight: 700;
+  font-size: 24px;
 }
 
 .header-form {
+  gap: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,27 +54,28 @@ ul {
   background-color: #eee;
 }
 
-@mixin link-a() {
+@mixin link-p() {
   display: flex;
   justify-content: space-between;
   position: relative;
 }
 
-.list__a {
+.list__p {
   padding: 7px 15px 7px 35px;
   text-decoration: none;
   color: inherit;
-  @include link-a();
+  @include link-p();
+  font-size: 24px;
 }
 
-.list__a--cross {
-  @include link-a();
+.list__p--cross {
+  @include link-p();
 
   transition: 300ms;
   color: white;
   background-color: #5a5a5a;
 
-  & .list__a {
+  & .list__p {
     text-decoration: line-through;
   }
 
@@ -114,7 +118,7 @@ ul {
 
 .todo-form__button {
   height: inherit;
-  font-size: 10px;
+  font-size: 16px;
 }
 
 .header-form__input {

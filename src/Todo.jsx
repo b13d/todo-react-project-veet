@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef } from "react";
 import ReactDOM from "react-dom/client";
 import "./todo.scss";
 
@@ -60,7 +60,7 @@ export default function Main() {
     let temp = cross.map((value, index) => {
       if (arrIndex[z] === index) {
         z++;
-        return "list__a--cross";
+        return "list__p--cross";
       } else {
         return "list__li";
       }
@@ -109,10 +109,17 @@ export default function Main() {
       }
     });
 
+    let tempCross = cross.map((value) => {
+      if (value === "list__p--cross") {
+        return "list__li";
+      } else {
+        return "list__li";
+      }
+    });
+
+    setCross(tempCross);
     setCheck(temp);
   };
-
-  const showForm = (event) => {};
 
   return (
     <div>
@@ -130,6 +137,7 @@ export default function Main() {
             </label>
             <div className="header-form__input">
               <input
+                autoFocus
                 ref={inputElement}
                 className="todo-form__input"
                 type="text"
@@ -139,17 +147,7 @@ export default function Main() {
                 className="todo-form__button"
                 onClick={(e) => {
                   e.preventDefault();
-                  AddTask(
-                    e,
-                    inputElement,
-                    check,
-                    setCheck,
-                    setList,
-                    setId,
-                    id,
-                    setListWords,
-                    listWord
-                  );
+                  AddTask(e);
                 }}
               >
                 Add
@@ -189,7 +187,7 @@ export default function Main() {
           onClick={(e) => Cross(e, i)}
         >
           <li className={cross[i]}>
-            <p className="list__a">{listWord[i]}</p>
+            <p className="list__p">{listWord[i]}</p>
 
             <div className="list__buttons">
               <input
@@ -217,17 +215,7 @@ export default function Main() {
     return listItems;
   }
 
-  function AddTask(
-    e,
-    inputElement,
-    check,
-    setCheck,
-    setList,
-    setId,
-    id,
-    setListWords,
-    listWord
-  ) {
+  function AddTask(e) {
     if (inputElement.current.value.trim().length !== 0) {
       let arr = check;
       let arrWords = [];
@@ -245,7 +233,7 @@ export default function Main() {
         arrList.push(
           <a key={i} className="list__link" onClick={(e) => Cross(e, i)}>
             <li className="list__li">
-              <p className="list__a">{inputElement.current.value}</p>
+              <p className="list__p">{inputElement.current.value}</p>
               <div className="list__buttons">
                 <input
                   id={id}
@@ -302,8 +290,11 @@ export default function Main() {
     setListWords(arrWords);
     setCheck(arrCheck);
     setCross(arrCross);
+    setList(arrReserve);
 
-    return setList(arrReserve);
+    if (arrReserve.length === 0) {
+      activeButtons("hidden");
+    }
   }
 
   function Cross(element, crossId) {
@@ -312,18 +303,17 @@ export default function Main() {
     let str = element.target.className;
 
     if (str !== "list__button" && str !== "checkbox") {
-      if (str === "list__a") {
+      if (str === "list__p") {
         str = element.target.parentElement.className;
-
         str =
-          str === "list__a--cross"
+          str === "list__p--cross"
             ? (str = "list__li")
-            : (str = "list__a--cross");
+            : (str = "list__p--cross");
       } else {
         str =
-          str === "list__a--cross"
+          str === "list__p--cross"
             ? (str = "list__li")
-            : (str = "list__a--cross");
+            : (str = "list__p--cross");
       }
 
       let arr = cross.map((value, index) => {
